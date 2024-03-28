@@ -1,4 +1,5 @@
 from PingResult import PingResult
+from WindowsConstants import *
 
 import re
 import socket
@@ -7,16 +8,13 @@ import time
 
 class EchoRequestSocket:
 
-    WINDOWS_PING_SLEEP = 1  # seconds
-    WINDOWS_PING_TIMOUT = 4  # ms
-
     ping_result = PingResult()
 
     def __init__(self, packet, arguments):
         self.packet = packet
         self.arguments = arguments
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
-        self.sock.settimeout(self.WINDOWS_PING_TIMOUT)
+        self.sock.settimeout(PING_TIMOUT)
 
         try:
             addr_info = socket.getaddrinfo(arguments.host, None, socket.AF_INET6)
@@ -75,13 +73,13 @@ class EchoRequestSocket:
             while True:
                 self.send()
                 self.read()
-                time.sleep(self.WINDOWS_PING_SLEEP)
+                time.sleep(PING_SLEEP)
         else:
             for i in range(repetitions):
                 self.send()
                 self.read()
                 if i < repetitions - 1:
-                    time.sleep(self.WINDOWS_PING_SLEEP)
+                    time.sleep(PING_SLEEP)
 
         lost_percentage = (self.ping_result.fails / self.ping_result.sends) * 100
         if lost_percentage.is_integer():

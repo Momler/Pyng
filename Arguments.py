@@ -28,13 +28,11 @@ class Arguments:
             self.print_help()
 
     def parse(self, arguments):
-        for argument in arguments[1::]:  # Skip first arg, since its the program name
-            if "-t" in arguments:
-                self.t_flag = True
-                arguments.remove("-t")
-                continue
+        if "-t" in arguments:
+            self.t_flag = True
+            arguments.remove("-t")
 
-            self.host = argument
+        self.host = arguments[1]
 
     def print_help(self):
         T = "    "
