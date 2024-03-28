@@ -1,6 +1,7 @@
 class Arguments:
     host = ""
     t_flag = False
+    a_flag = False
 
     optional_options = [
         [
@@ -27,6 +28,10 @@ class Arguments:
         if "-t" in arguments:
             self.t_flag = True
             arguments.remove("-t")
+
+        if "-a" in arguments:
+            self.a_flag = True
+            arguments.remove("-a")
 
         if len(arguments) == 1:
             print("IP-Adresse muss angegeben werden.")

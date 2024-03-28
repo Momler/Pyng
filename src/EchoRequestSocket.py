@@ -16,20 +16,9 @@ class EchoRequestSocket:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP)
         self.sock.settimeout(PING_TIMOUT)
 
-        try:
-            addr_info = socket.getaddrinfo(arguments.host, None, socket.AF_INET6)
-            ipv6_addresses = [
-                info[4][0] for info in addr_info if info[0] == socket.AF_INET6
-            ]
-            self.ping_result.host_name = ipv6_addresses[0]
-        except:
-            if not self.is_valid_ipv4(arguments.host):
-                print(
-                    f"""Ping-Anforderung konnte Host "{arguments.host}" nicht finden. Überprüfen Sie den Namen, und versuchen Sie es erneut."""
-                )
-                print("")
-                exit(-1)
-            pass
+        if arguments.a_flag:
+            self.resolve_host_name()
+
         self.ping_result.host_ip = arguments.host
 
     def send(self):
@@ -88,12 +77,19 @@ class EchoRequestSocket:
 
         print("")
 
-    def is_valid_ipv4(self, ip):
-        ipv4_pattern = r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
-        if re.match(ipv4_pattern, ip):
-            return True
-        else:
-            return False
+    def resolve_host_name(self):
+        try:
+            addr_info = socket.getaddrinfo(self.arguments.host, None, socket.AF_INET6)
+            ipv6_addresses = [
+                info[4][0] for info in addr_info if info[0] == socket.AF_INET6
+            ]
+            self.ping_result.host_name = ipv6_addresses[0]
+        except:
+            print(
+                f"""Ping-Anforderung konnte Host "{self.arguments.host}" nicht finden. Überprüfen Sie den Namen, und versuchen Sie es erneut."""
+            )
+            print("")
+            exit(-1)
 
     def close(self):
         self.sock.close()

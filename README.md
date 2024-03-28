@@ -2,6 +2,12 @@
 A complete implementation of the well known `ping` program under windows, using `python 3.10.0` with no dependencies.
 The outputs and the flags correspond 1:1 to the windows implementation.
 
+## Fixes
+
+There are things that the Windows ping implementation does wrong, but are fixed in this project.
+
+1. The [Windows documentation](https://learn.microsoft.com/de-de/windows-server/administration/windows-commands/ping) claims that if the `-a` flag is specified, the corresponding hostname of the IP address will be resolved. However, this happens by default and cannot be deactivated. Accordingly, the `-a` has no use under the Windows implementation and is permanently active.
+
 ## How to use
 Simply execute `Pyng.py` with the known arguments from the standard `ping`:
 
