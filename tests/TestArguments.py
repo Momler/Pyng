@@ -45,7 +45,13 @@ class TestArguments(unittest.TestCase):
         self.assertEqual(arguments.host, "foo.com")
         self.assertEqual(arguments.t_flag, True)
 
-    def test_t_flag_no_host(self):
+    def test_a_flag(self):
+        arguments = Arguments(["testprogram", "foo.com", "-a"])
+
+        self.assertEqual(arguments.host, "foo.com")
+        self.assertEqual(arguments.a_flag, True)
+
+    def test_flag_no_host(self):
         with self.assertRaises(SystemExit) as cm:
             Arguments(["testprogram", "-t"])
 
