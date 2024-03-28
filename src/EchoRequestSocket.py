@@ -28,7 +28,7 @@ class EchoRequestSocket:
                     f"""Ping-Anforderung konnte Host "{arguments.host}" nicht finden. Überprüfen Sie den Namen, und versuchen Sie es erneut."""
                 )
                 print("")
-                exit(0)
+                exit(-1)
             pass
         self.ping_result.host_ip = arguments.host
 

@@ -1,6 +1,3 @@
-import sys
-
-
 class Arguments:
     host = ""
     t_flag = False
@@ -19,22 +16,25 @@ class Arguments:
         ["Zielname", []],
     ]
 
-    def __init__(self):
-        arguments = sys.argv
-
+    def __init__(self, arguments):
         if len(arguments) > 1:
             self.parse(arguments)
         else:
-            self.print_help()
+            print(self.create_help_text())
+            exit(-1)
 
     def parse(self, arguments):
         if "-t" in arguments:
             self.t_flag = True
             arguments.remove("-t")
 
+        if len(arguments) == 1:
+            print("IP-Adresse muss angegeben werden.")
+            exit(-1)
+
         self.host = arguments[1]
 
-    def print_help(self):
+    def create_help_text(self):
         T = "    "
 
         flags = ""
@@ -57,4 +57,4 @@ class Arguments:
             options += f"{T}{optional_option[0]}{full_option_help}"
 
         help_text = f"Syntax: ping {flags}\n\nOptionen:\n{options}"
-        print(help_text)
+        return help_text
