@@ -14,15 +14,20 @@ class EchoRequest:
         self.id = random.randint(0, 65535)
         self.seq = 1
 
-        self.header = struct.pack(
-            "!BBHHH", self.TYPE, self.CODE, self.checksum, self.id, self.seq
-        )
-
         if arguments.l_flag[0]:
             payload_size = arguments.l_flag[1]
         else:
             payload_size = DEFAULT_PING_PAYLOAD_SIZE
         payload = create_ping_payload(payload_size)
+
+        if arguments.f_flag:
+            flags = 0x4000
+        else:
+            flags = 0
+
+        self.header = struct.pack(
+            "!BBHHH", self.TYPE, self.CODE, self.checksum, self.id, self.seq | flags
+        )
 
         self.checksum = self.calculate_checksum(self.header + payload)
 
@@ -33,7 +38,7 @@ class EchoRequest:
                 self.CODE,
                 socket.htons(self.checksum),
                 self.id,
-                self.seq,
+                self.seq | flags,
             )
             + payload
         )

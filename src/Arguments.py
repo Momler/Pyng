@@ -4,6 +4,7 @@ class Arguments:
     a_flag = False
     n_flag = (False, 0)
     l_flag = (False, 0)
+    f_flag = (False, 0)
 
     optional_options = [
         [
@@ -17,7 +18,14 @@ class Arguments:
         ],
         ["-a", ["             Löst Adressen zu Hostnamen auf."]],
         ["-n count", ["       Die Anzahl der zu sendenden Echoanforderungen."]],
-        ["-l size", ["       Die Größe des Sendepuffers."]],
+        ["-l size", ["        Die Größe des Sendepuffers."]],
+        [
+            "-f",
+            [
+                '             Legt das Kennzeichen für "Nicht fragmentieren" im Paket',
+                "                    fest (nur IPv4).",
+            ],
+        ],
         ["Zielname", []],
     ]
 
@@ -32,6 +40,10 @@ class Arguments:
         if "-t" in arguments:
             self.t_flag = True
             arguments.remove("-t")
+
+        if "-f" in arguments:
+            self.f_flag = True
+            arguments.remove("-f")
 
         if "-a" in arguments:
             self.a_flag = True
