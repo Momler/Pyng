@@ -2,6 +2,8 @@
 A complete implementation of the well known `ping` program under windows, using `python 3.10.0` with no dependencies.
 The outputs and the flags correspond 1:1 to the windows implementation.
 
+Currently under development, but basic features are implemented
+
 ## Fixes
 
 There are things that the Windows ping implementation does wrong, but are fixed in this project.
