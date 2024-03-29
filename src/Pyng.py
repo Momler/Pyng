@@ -7,7 +7,7 @@ import sys
 
 if __name__ == "__main__":
     arguments = Arguments(sys.argv)
-    echo_request = EchoRequest()
+    echo_request = EchoRequest(arguments)
     request_socket = EchoRequestSocket(echo_request.packet, arguments)
 
     try:

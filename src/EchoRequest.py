@@ -9,7 +9,7 @@ class EchoRequest:
     TYPE = 8
     CODE = 0
 
-    def __init__(self):
+    def __init__(self, arguments):
         self.checksum = 0
         self.id = random.randint(0, 65535)
         self.seq = 1
@@ -18,7 +18,13 @@ class EchoRequest:
             "!BBHHH", self.TYPE, self.CODE, self.checksum, self.id, self.seq
         )
 
-        self.checksum = self.calculate_checksum(self.header + PING_PAYLOAD)
+        if arguments.l_flag[0]:
+            payload_size = arguments.l_flag[1]
+        else:
+            payload_size = DEFAULT_PING_PAYLOAD_SIZE
+        payload = create_ping_payload(payload_size)
+
+        self.checksum = self.calculate_checksum(self.header + payload)
 
         self.packet = (
             struct.pack(
@@ -29,7 +35,7 @@ class EchoRequest:
                 self.id,
                 self.seq,
             )
-            + PING_PAYLOAD
+            + payload
         )
 
     def calculate_checksum(self, data):
