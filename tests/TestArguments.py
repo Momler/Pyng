@@ -34,12 +34,6 @@ class TestArguments(unittest.TestCase):
         self.assertEqual(arguments.host, "foo.com")
         self.assertEqual(arguments.a_flag, True)
 
-    def test_f_flag(self):
-        arguments = Arguments(["testprogram", "foo.com", "-f"])
-
-        self.assertEqual(arguments.host, "foo.com")
-        self.assertEqual(arguments.f_flag, True)
-
     def test_n_flag_no_number(self):
         with self.assertRaises(SystemExit) as cm:
             Arguments(["testprogram", "foo.com", "-n"])

@@ -33,6 +33,7 @@ class EchoRequestSocket:
     def read(self):
         try:
             data, addr = self.sock.recvfrom(1024)
+
             recv_time = int(time.time() * 1000)
 
             took_time = recv_time - self.send_time
