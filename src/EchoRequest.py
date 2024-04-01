@@ -9,10 +9,10 @@ class EchoRequest:
     TYPE = 8
     CODE = 0
 
-    def __init__(self, arguments):
+    def __init__(self, arguments, sequence_number):
         self.checksum = 0
         self.id = random.randint(0, 65535)
-        self.seq = 1
+        self.seq = sequence_number
 
         if arguments.l_flag[0]:
             payload_size = arguments.l_flag[1]
